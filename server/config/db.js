@@ -2,9 +2,19 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/3play', {
+    const mongoUri = process.env.MONGODB_URI;
+
+    if (!mongoUri) {
+      throw new Error('MONGODB_URI environment variable is not defined');
+    }
+
+    // Mask URI for logging (hide password)
+    const maskedUri = mongoUri.replace(/\/\/[^:]+:[^@]+@/, '//***:***@');
+    console.log(`Connecting to MongoDB: ${maskedUri}`);
+
+    const conn = await mongoose.connect(mongoUri, {
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 10000,
       socketTimeoutMS: 45000,
     });
 
@@ -28,7 +38,12 @@ const connectDB = async () => {
 
   } catch (error) {
     console.error('Database connection failed:', error.message);
-    process.exit(1);
+    console.error('Please check:');
+    console.error('  1. MONGODB_URI is set correctly in Render Environment');
+    console.error('  2. MongoDB Atlas IP whitelist includes Render IPs');
+    console.error('  3. MongoDB user credentials are correct');
+    // Don't exit - let the server start so we can see the error in logs
+    throw error;
   }
 };
 

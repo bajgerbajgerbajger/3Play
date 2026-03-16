@@ -26,8 +26,21 @@ const userRoutes = require('./routes/users');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Connect to MongoDB
-connectDB();
+// Validate required environment variables
+const requiredEnvVars = ['MONGODB_URI', 'JWT_SECRET', 'JWT_REFRESH_SECRET'];
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+  console.error('ERROR: Missing required environment variables:');
+  missingEnvVars.forEach(envVar => console.error(`  - ${envVar}`));
+  console.error('\nPlease set these in your Render dashboard Environment settings.');
+  process.exit(1);
+}
+
+// Connect to MongoDB (non-blocking)
+connectDB().catch(err => {
+  console.error('Failed to connect to MongoDB:', err.message);
+});
 
 // Create uploads directory if not exists
 const uploadsDir = path.join(__dirname, 'uploads');
