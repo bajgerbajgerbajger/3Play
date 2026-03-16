@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "3Play - Complete Video Platform",
   "scripts": {
+    "start": "cd server && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "cd server && npm run dev",
     "client": "cd client && npm run dev",
