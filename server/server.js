@@ -34,7 +34,8 @@ if (missingEnvVars.length > 0) {
   console.error('ERROR: Missing required environment variables:');
   missingEnvVars.forEach(envVar => console.error(`  - ${envVar}`));
   console.error('\nPlease set these in your Render dashboard Environment settings.');
-  process.exit(1);
+  console.error('Server will continue to start but may not function correctly.\n');
+  // Don't exit - let server start for debugging
 }
 
 // Connect to MongoDB (non-blocking)
