@@ -13,6 +13,7 @@ import Subscriptions from './pages/Subscriptions'
 import Trending from './pages/Trending'
 import Library from './pages/Library'
 import Downloads from './pages/Downloads'
+import VerifyEmail from './pages/VerifyEmail'
 
 // Protected route component
 const ProtectedRoute = ({ children }) => {
@@ -101,6 +102,7 @@ function App() {
             <Layout><Downloads /></Layout>
           </ProtectedRoute>
         } />
+        <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="*" element={<Layout><div className="p-8 text-center">Page not found</div></Layout>} />
       </Routes>
     </Router>

@@ -1,9 +1,10 @@
 import { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Upload as UploadIcon, Video, Image, X, CheckCircle } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { Upload as UploadIcon, Video, Image, X, CheckCircle, AlertCircle, Mail } from 'lucide-react'
+import { useNavigate, Link } from 'react-router-dom'
 import api from '../api/axios'
 import toast from 'react-hot-toast'
+import { useAuthStore } from '../store/authStore'
 
 const Upload = () => {
   const [videoFile, setVideoFile] = useState(null)
@@ -20,6 +21,59 @@ const Upload = () => {
   })
 
   const navigate = useNavigate()
+  const { user, resendVerification } = useAuthStore()
+  const [isResending, setIsResending] = useState(false)
+
+  // Check if user is verified
+  if (!user?.isVerified) {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <div className="bg-3play-card border border-3play-border rounded-2xl p-8 text-center">
+          <div className="w-20 h-20 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <AlertCircle className="w-10 h-10 text-amber-500" />
+          </div>
+          <h1 className="text-2xl font-bold mb-3">Email Verification Required</h1>
+          <p className="text-3play-text-secondary mb-6 max-w-md mx-auto">
+            Please verify your email address to upload videos. Check your inbox for the verification link or resend the email.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={async () => {
+                setIsResending(true)
+                const result = await resendVerification()
+                setIsResending(false)
+                if (result.success) {
+                  toast.success('Verification email sent! Check your inbox.')
+                } else {
+                  toast.error(result.message || 'Failed to resend email')
+                }
+              }}
+              disabled={isResending}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-3play-accent hover:bg-3play-accent-hover disabled:opacity-50 disabled:cursor-not-allowed rounded-xl font-medium transition-colors"
+            >
+              {isResending ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Mail className="w-4 h-4" />
+                  Resend Verification Email
+                </>
+              )}
+            </button>
+            <Link
+              to="/"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-3play-card hover:bg-3play-card/80 border border-3play-border rounded-xl font-medium transition-colors"
+            >
+              Go Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   const categories = [
     { value: 'entertainment', label: 'Entertainment' },

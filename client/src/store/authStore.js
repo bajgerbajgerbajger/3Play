@@ -137,7 +137,41 @@ export const useAuthStore = create(
         set({ user: { ...get().user, ...userData } })
       },
 
-      clearError: () => set({ error: null })
+      clearError: () => set({ error: null }),
+
+      resendVerification: async () => {
+        try {
+          const user = get().user
+          if (!user?.email) {
+            return { success: false, message: 'No user email found' }
+          }
+
+          await api.post('/auth/resend-verification', { email: user.email })
+          return { success: true }
+        } catch (error) {
+          const message = error.response?.data?.message || 'Failed to resend verification email'
+          return { success: false, message }
+        }
+      },
+
+      verifyEmail: async (token) => {
+        try {
+          const response = await api.get(`/auth/verify-email/${token}`)
+
+          // Update user verification status
+          const currentUser = get().user
+          if (currentUser) {
+            set({
+              user: { ...currentUser, isVerified: true }
+            })
+          }
+
+          return { success: true, message: response.data?.message || 'Email verified successfully' }
+        } catch (error) {
+          const message = error.response?.data?.message || 'Email verification failed'
+          return { success: false, message }
+        }
+      }
     }),
     {
       name: '3play-auth',

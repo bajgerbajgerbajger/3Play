@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
+import VerificationBanner from '../VerificationBanner'
 
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -8,6 +9,7 @@ const Layout = ({ children }) => {
   return (
     <div className="min-h-screen bg-3play-dark">
       <Navbar onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+      <VerificationBanner />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
       <main className="pt-16 lg:pl-64">
