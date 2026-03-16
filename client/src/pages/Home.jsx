@@ -6,16 +6,17 @@ import api from '../api/axios'
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState('all')
+  const { t } = useTranslation()
 
   const categories = [
-    { id: 'all', label: 'All' },
-    { id: 'entertainment', label: 'Entertainment' },
-    { id: 'music', label: 'Music' },
-    { id: 'gaming', label: 'Gaming' },
-    { id: 'education', label: 'Education' },
-    { id: 'sports', label: 'Sports' },
-    { id: 'technology', label: 'Technology' },
-    { id: 'news', label: 'News' },
+    { id: 'all', label: t('home.categories.all') },
+    { id: 'entertainment', label: t('home.categories.entertainment') },
+    { id: 'music', label: t('home.categories.music') },
+    { id: 'gaming', label: t('home.categories.gaming') },
+    { id: 'education', label: t('home.categories.education') },
+    { id: 'sports', label: t('home.categories.sports') },
+    { id: 'technology', label: t('home.categories.technology') },
+    { id: 'news', label: t('home.categories.news') },
   ]
 
   const { data: videos, isLoading, error } = useQuery({
