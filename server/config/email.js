@@ -1,5 +1,17 @@
 // Email configuration for 3Play Video Platform
 // Supports SMTP, SendGrid, and Ethereal (development) transports
+//
+// Trusted IP Ranges for Email Service Provider:
+// The following IP ranges are whitelisted for SMTP communication and webhooks:
+//   - 74.220.51.0/24 (256 IPs: 74.220.51.0 - 74.220.51.255)
+//   - 74.220.59.0/24 (256 IPs: 74.220.59.0 - 74.220.59.255)
+//
+// These IPs are used by the email service provider for:
+//   - Outgoing SMTP connections
+//   - Incoming webhook callbacks
+//   - Email delivery confirmations
+//
+// See server/config/security.js for IP validation utilities
 
 const getEmailConfig = () => {
   const {

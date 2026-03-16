@@ -1,5 +1,31 @@
 // Security configuration and middleware
 
+// Trusted IP ranges for email service provider SMTP servers
+// These IPs are whitelisted for webhook verification and rate limiting exceptions
+const TRUSTED_IP_RANGES = [
+  '74.220.51.0/24',  // 256 IPs: 74.220.51.0 - 74.220.51.255
+  '74.220.59.0/24'   // 256 IPs: 74.220.59.0 - 74.220.59.255
+];
+
+// Parse CIDR notation and check if IP is in range
+const ipToLong = (ip) => {
+  return ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet, 10), 0) >>> 0;
+};
+
+const isIpInRange = (ip, cidr) => {
+  const [rangeIp, prefix] = cidr.split('/');
+  const ipLong = ipToLong(ip);
+  const rangeLong = ipToLong(rangeIp);
+  const mask = -1 << (32 - parseInt(prefix, 10));
+  return (ipLong & mask) === (rangeLong & mask);
+};
+
+// Check if an IP address is in the trusted whitelist
+const isTrustedIP = (ip) => {
+  if (!ip) return false;
+  return TRUSTED_IP_RANGES.some(range => isIpInRange(ip, range));
+};
+
 // Security headers middleware
 const securityHeaders = (req, res, next) => {
   // Prevent MIME type sniffing
@@ -122,5 +148,7 @@ module.exports = {
   allowedVideoTypes,
   allowedImageTypes,
   rateLimitConfigs,
-  tokenConfig
+  tokenConfig,
+  TRUSTED_IP_RANGES,
+  isTrustedIP
 };

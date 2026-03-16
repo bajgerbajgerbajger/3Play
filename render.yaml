@@ -28,3 +28,6 @@ services:
         sync: false
       - key: CLIENT_URL
         sync: false
+      - key: TRUSTED_IP_RANGES
+        value: 74.220.51.0/24,74.220.59.0/24
+        comment: Email service provider IP ranges for SMTP and webhooks
