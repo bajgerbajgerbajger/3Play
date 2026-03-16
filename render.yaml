@@ -6,9 +6,12 @@ services:
     rootDir: server
     buildCommand: npm install
     startCommand: npm start
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 10000
       - key: MONGODB_URI
         sync: false
       - key: JWT_SECRET
@@ -35,3 +38,20 @@ services:
     envVars:
       - key: VITE_API_URL
         sync: false
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://3play-api.onrender.com/api/$1
+      - type: rewrite
+        source: /uploads/*
+        destination: https://3play-api.onrender.com/uploads/$1
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000
