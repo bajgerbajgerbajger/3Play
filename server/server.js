@@ -239,9 +239,10 @@ process.on('SIGTERM', () => {
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`3Play Server running on port ${PORT}`);
+// Start server - bind to 0.0.0.0 for Render compatibility
+const HOST = '0.0.0.0';
+app.listen(PORT, HOST, () => {
+  console.log(`3Play Server running on http://${HOST}:${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
