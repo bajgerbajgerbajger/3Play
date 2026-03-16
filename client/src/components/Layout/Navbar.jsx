@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Search, Menu, Bell, Upload, User, LogOut, Settings } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
+import { useTranslation } from 'react-i18next'
 
 const Navbar = ({ onMenuClick }) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -10,6 +11,7 @@ const Navbar = ({ onMenuClick }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const { user, isAuthenticated, logout } = useAuthStore()
+  const { t } = useTranslation()
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -66,7 +68,7 @@ const Navbar = ({ onMenuClick }) => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search videos..."
+                placeholder={t('navigation.searchPlaceholder')}
                 className="flex-1 bg-3play-card border border-3play-border rounded-l-full px-4 py-2 focus:outline-none focus:border-3play-accent transition-colors"
               />
               <button
@@ -96,7 +98,7 @@ const Navbar = ({ onMenuClick }) => {
                 className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-3play-card hover:bg-3play-border transition-colors"
               >
                 <Upload className="w-5 h-5" />
-                <span className="font-medium">Upload</span>
+                <span className="font-medium">{t('navigation.upload')}</span>
               </Link>
 
               <button className="p-2 rounded-full hover:bg-3play-card transition-colors relative">
@@ -133,7 +135,7 @@ const Navbar = ({ onMenuClick }) => {
                       className="flex items-center gap-3 px-4 py-2 hover:bg-3play-dark transition-colors"
                     >
                       <User className="w-5 h-5" />
-                      <span>Your channel</span>
+                      <span>{t('navigation.yourChannel')}</span>
                     </Link>
 
                     <Link
@@ -142,7 +144,7 @@ const Navbar = ({ onMenuClick }) => {
                       className="flex items-center gap-3 px-4 py-2 hover:bg-3play-dark transition-colors"
                     >
                       <Settings className="w-5 h-5" />
-                      <span>Settings</span>
+                      <span>{t('navigation.settings')}</span>
                     </Link>
 
                     <hr className="my-2 border-3play-border" />
@@ -152,7 +154,7 @@ const Navbar = ({ onMenuClick }) => {
                       className="w-full flex items-center gap-3 px-4 py-2 hover:bg-3play-dark transition-colors text-red-400"
                     >
                       <LogOut className="w-5 h-5" />
-                      <span>Sign out</span>
+                      <span>{t('navigation.signOut')}</span>
                     </button>
                   </div>
                 )}
@@ -164,13 +166,13 @@ const Navbar = ({ onMenuClick }) => {
                 to="/login"
                 className="px-4 py-2 rounded-full border border-3play-border hover:bg-3play-card transition-colors"
               >
-                Sign In
+                {t('navigation.signIn')}
               </Link>
               <Link
                 to="/register"
                 className="px-4 py-2 rounded-full bg-3play-accent hover:bg-3play-accent-hover transition-colors font-medium"
               >
-                Sign Up
+                {t('navigation.signUp')}
               </Link>
             </div>
           )}

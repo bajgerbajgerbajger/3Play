@@ -1,0 +1,11 @@
+# SSL Certificates Directory
+# Place your SSL certificates here:
+# - cert.pem (or fullchain.pem)
+# - key.pem (or privkey.pem)
+#
+# For development, you can generate self-signed certificates:
+# openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+#   -keyout key.pem -out cert.pem \
+#   -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"
+#
+# For production, use certificates from a trusted CA like Let's Encrypt

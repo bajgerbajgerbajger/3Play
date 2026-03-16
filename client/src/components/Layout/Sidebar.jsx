@@ -14,30 +14,32 @@ import {
   Download
 } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
+import { useTranslation } from 'react-i18next'
 
 const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation()
   const { isAuthenticated } = useAuthStore()
+  const { t } = useTranslation()
 
   const mainLinks = [
-    { icon: Home, label: 'Home', path: '/' },
-    { icon: TrendingUp, label: 'Trending', path: '/trending' },
-    { icon: Users, label: 'Subscriptions', path: '/subscriptions', auth: true },
+    { icon: Home, label: t('navigation.home'), path: '/' },
+    { icon: TrendingUp, label: t('navigation.trending'), path: '/trending' },
+    { icon: Users, label: t('navigation.subscriptions'), path: '/subscriptions', auth: true },
   ]
 
   const libraryLinks = [
-    { icon: Library, label: 'Library', path: '/library', auth: true },
-    { icon: History, label: 'History', path: '/history', auth: true },
-    { icon: Clock, label: 'Watch Later', path: '/watch-later', auth: true },
-    { icon: ThumbsUp, label: 'Liked Videos', path: '/liked', auth: true },
-    { icon: Download, label: 'Downloads', path: '/downloads', auth: true },
+    { icon: Library, label: t('navigation.library'), path: '/library', auth: true },
+    { icon: History, label: t('navigation.history'), path: '/history', auth: true },
+    { icon: Clock, label: t('navigation.watchLater'), path: '/watch-later', auth: true },
+    { icon: ThumbsUp, label: t('navigation.likedVideos'), path: '/liked', auth: true },
+    { icon: Download, label: t('navigation.downloads'), path: '/downloads', auth: true },
   ]
 
   const moreLinks = [
-    { icon: Settings, label: 'Settings', path: '/settings', auth: true },
-    { icon: Flag, label: 'Report history', path: '/reports', auth: true },
-    { icon: HelpCircle, label: 'Help', path: '/help' },
-    { icon: MessageSquare, label: 'Send feedback', path: '/feedback' },
+    { icon: Settings, label: t('navigation.settings'), path: '/settings', auth: true },
+    { icon: Flag, label: t('navigation.reportHistory'), path: '/reports', auth: true },
+    { icon: HelpCircle, label: t('navigation.help'), path: '/help' },
+    { icon: MessageSquare, label: t('navigation.sendFeedback'), path: '/feedback' },
   ]
 
   const isActive = (path) => location.pathname === path
@@ -94,7 +96,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             <>
               <div className="space-y-1">
                 <p className="px-4 text-sm font-semibold text-3play-text-secondary uppercase tracking-wider">
-                  Library
+                  {t('navigation.library')}
                 </p>
                 {libraryLinks.map(renderLink)}
               </div>
@@ -105,7 +107,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           {/* More section */}
           <div className="space-y-1">
             <p className="px-4 text-sm font-semibold text-3play-text-secondary uppercase tracking-wider">
-              More
+              {t('navigation.more')}
             </p>
             {moreLinks.map(renderLink)}
           </div>
@@ -116,9 +118,9 @@ const Sidebar = ({ isOpen, onClose }) => {
           <div className="px-4 py-2 text-xs text-3play-text-muted">
             <p>© 2024 3Play Inc.</p>
             <div className="flex flex-wrap gap-2 mt-2">
-              <Link to="/about" className="hover:text-white">About</Link>
-              <Link to="/privacy" className="hover:text-white">Privacy</Link>
-              <Link to="/terms" className="hover:text-white">Terms</Link>
+              <Link to="/about" className="hover:text-white">{t('navigation.about')}</Link>
+              <Link to="/privacy" className="hover:text-white">{t('navigation.privacy')}</Link>
+              <Link to="/terms" className="hover:text-white">{t('navigation.terms')}</Link>
             </div>
           </div>
         </div>
