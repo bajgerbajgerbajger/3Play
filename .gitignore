@@ -38,6 +38,9 @@ server/temp/
 *.swp
 *.swo
 
+# Local AI/agent settings (keep out of git)
+.claude/
+
 # OS
 .DS_Store
 Thumbs.db
