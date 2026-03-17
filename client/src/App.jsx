@@ -14,6 +14,15 @@ import Trending from './pages/Trending'
 import Library from './pages/Library'
 import Downloads from './pages/Downloads'
 import VerifyEmail from './pages/VerifyEmail'
+import History from './pages/History'
+import WatchLater from './pages/WatchLater'
+import LikedVideos from './pages/LikedVideos'
+import Settings from './pages/Settings'
+import Reports from './pages/Reports'
+import Feedback from './pages/Feedback'
+import About from './pages/About'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 
 // Protected route component
 const ProtectedRoute = ({ children }) => {
@@ -103,6 +112,35 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/history" element={
+          <ProtectedRoute>
+            <Layout><History /></Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/watch-later" element={
+          <ProtectedRoute>
+            <Layout><WatchLater /></Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/liked" element={
+          <ProtectedRoute>
+            <Layout><LikedVideos /></Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/settings" element={
+          <ProtectedRoute>
+            <Layout><Settings /></Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/reports" element={
+          <ProtectedRoute>
+            <Layout><Reports /></Layout>
+          </ProtectedRoute>
+        } />
+        <Route path="/feedback" element={<Layout><Feedback /></Layout>} />
+        <Route path="/about" element={<Layout><About /></Layout>} />
+        <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
+        <Route path="/terms" element={<Layout><Terms /></Layout>} />
         <Route path="*" element={<Layout><div className="p-8 text-center">Page not found</div></Layout>} />
       </Routes>
     </Router>
