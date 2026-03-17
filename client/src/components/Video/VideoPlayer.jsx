@@ -25,6 +25,7 @@ import api from '../../api/axios'
 import toast from 'react-hot-toast'
 
 const VideoPlayer = ({ video }) => {
+  const apiBaseUrl = api?.defaults?.baseURL || import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
@@ -255,7 +256,7 @@ const VideoPlayer = ({ video }) => {
       >
         <video
           ref={videoRef}
-          src={`/api/videos/${video._id}/stream`}
+          src={`${apiBaseUrl}/videos/${video._id}/stream`}
           className="w-full h-full"
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}

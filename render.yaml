@@ -27,7 +27,18 @@ services:
       - key: EMAIL_PASS
         sync: false
       - key: CLIENT_URL
-        sync: false
+        value: https://3play-web.onrender.com
       - key: TRUSTED_IP_RANGES
         value: 74.220.51.0/24,74.220.59.0/24
         comment: Email service provider IP ranges for SMTP and webhooks
+
+  # Frontend Web App (Vite/React) - Static Site
+  - type: web
+    name: 3play-web
+    runtime: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://3play-api.onrender.com/api
